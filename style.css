@@ -1,0 +1,36 @@
+html,
+   body {
+   overflow:hidden
+   }
+body{
+    height: 100vh;
+}
+.maincontainer{
+    height: 80vh;
+}
+.row{
+    height: 100vh;
+}
+.col-half-offset{
+    margin-left:4.166666667%
+}
+.card-body{
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+.weeksweather{
+    padding-left: 10px;
+    height: 50vh;
+}
+.header{
+    background-color: darkslategray;
+    color: white;
+    text-align: center;
+}
+.searcharea{
+    padding-left: 20px;
+}
+.citynowweatherdata{
+    height: 50vh;
+}
