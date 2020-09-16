@@ -1,8 +1,9 @@
     // This is our API key. Add your own API key between the ""
     var APIKey = "6261fa55f519561be7caea838a0ef085";
+    var cityname = $("input").val().trim()
 
     // Here we are building the URL we need to query the database
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=Bujumbura,Burundi&appid=" + APIKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&appid=" + APIKey;
 
     $.ajax({
         url: queryURL,
