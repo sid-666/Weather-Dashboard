@@ -76,3 +76,13 @@ h3{
 .header_city {
     display: flex;
 }
+.searchhistorybtnarea{
+    margin-top: 60px;
+    align-content: center;
+}
+.historybtn{
+    height: 40px;
+    width: 360px;
+    font-size: 25px;
+    border-radius: 10px;
+}
