@@ -1,3 +1,5 @@
+    var currentweather = $("#todayweather")
+    var Weeksweather = $("#weekforecast")
     // This is our API key. Add your own API key between the ""
     var APIKey = "e5d3d883d923c69ea77aa69a9e9734ab";
     var newSPI = "6261fa55f519561be7caea838a0ef085"
@@ -5,6 +7,7 @@
     // Here we are building the URL we need to query the database
     var today = new Date();
     var dd = today.getDate();
+    
 
     var mm = today.getMonth()+1; 
     var yyyy = today.getFullYear();
@@ -21,8 +24,7 @@
     
 
     $("#searchbutton").click(function(){
-        localStorage.setItem("cityname",$(".input").val().trim());
-        cityname = localStorage.getItem("cityname")
+        cityname = $(".input").val().trim()
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityname+"&appid="+newSPI
         $.ajax({
             url: queryURL,
@@ -35,7 +37,17 @@
             return $.ajax({
                 url: "https://api.openweathermap.org/data/2.5/onecall?lat="+latitude+"&lon="+longitude+"&exclude=minutely,hourlydaily&appid="+ newSPI
             }).then(function(response){
-                console.log(response)
+                console.log(41)
+                // Todays weather data
+                var iconurl = "http://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png"
+                 $("#wicon").attr("src", iconurl)
+                currentweather.find("#cheader").text(`${cityname} ${today}`)
+                var temperature = (response.daily[0].temp.day - 273.15) * 1.80 + 32;
+                currentweather.find("#temp").text("Temperature:" + " "+ temperature + "F")
+                // only save the valid city names
+                // var history = JSON.parse(localStorage.getItem("cities")) || []
+                // history.push(cityname)
+                // localStorage.setItem("cities", JSON.stringify(history))
             })
         })
 
