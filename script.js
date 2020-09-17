@@ -115,6 +115,18 @@
                 histbtn.text(currentdisplay[i].city).attr("class", "historybtn")
                 $("#sbtnarea").append(histbtn)
             }
+            histbtn.on("click", function(event){
+                event.stopPropagation()
+                console.log("Its Aight")
+                for(var x = 0; x< currentdisplay.length; x++ ){
+                    if(histbtn.text()== currentdisplay[x].city){
+                        cityname = currentdisplay[x].city
+                        DashboardDisplay(currentdisplay[x].data)
+                    }else{
+                        null
+                    }
+                }
+            })
         }
     })
 
