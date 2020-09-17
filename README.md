@@ -30,4 +30,5 @@ the temperature and the humdidity. The date was done seperately through a new Da
 * * JQuery ready function was used to pollute the page with information from local storage, if there was stored data in local storage
 
 # # Image
-
+![Weather Dashboard image](Webscrnshot.PNG)
+# # 
