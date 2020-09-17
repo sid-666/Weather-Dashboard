@@ -40,7 +40,7 @@ body{
     padding-top: 0px;
 }
 .citynowweatherdata{
-    height: 45vh;
+    height: 40%;
     margin-top: 5px;
     border-style: solid;
     border-width: thin;
@@ -82,7 +82,7 @@ h3{
 }
 .historybtn{
     height: 40px;
-    width: 360px;
+    width: 100%;
     font-size: 25px;
     border-radius: 10px;
 }
