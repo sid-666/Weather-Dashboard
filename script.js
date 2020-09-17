@@ -1,13 +1,14 @@
+    // grabbing elements where response data will be displayed in a variable
     var currentweather = $("#todayweather")
     var Weeksweather = $("#weekforecast")
-    // This is our API key. Add your own API key between the ""
+    // API key
     var APIKey = "e5d3d883d923c69ea77aa69a9e9734ab";
     var newSPI = "6261fa55f519561be7caea838a0ef085"
     var cityname;
     
-    // Here we are building the URL we need to query the database
+    // Storing date function in a variable
     var today = Currentdaydate();
-    
+    // Function that converts date (todays date) into a mm/dd/yyyy format
     function Currentdaydate() {
         var date = new Date();
         var dd = date.getDate();
@@ -22,6 +23,7 @@
         var today = mm + '/' + dd + '/' + yyyy;
         return today;
     }
+    //Function that converts dates of the week into mm/dd/yyyy format
     function WeekDates() {
         var weekdates = new Date;
         var dd = weekdates.getDate();
@@ -36,6 +38,7 @@
         }
         return { dd, mm, yyyy };
     }
+    //Function that displays API response in dashboard display
     function DashboardDisplay(response) {
         
         // Todays weather data
@@ -46,7 +49,16 @@
         currentweather.find("#temp").text("Temperature:" + " " + temperature.toFixed(2) + "F");
         currentweather.find("#humid").text("Humidity:" + " " + response.daily[0].humidity);
         currentweather.find("#wspeed").text("Wind Speed:" + " " + response.daily[0].wind_speed + "km/h");
-        currentweather.find("#uv").text("UV Index:" + " " + response.daily[0].uvi);
+        currentweather.find("#uvval").text( response.daily[0].uvi);
+        var uvcolor = currentweather.find("#uvval").text( response.daily[0].uvi);
+        if(response.daily[0].uvi > 6.){
+            uvcolor.css("background-color", "red")
+        }else if (response.daily[0].uvi < 3){
+            uvcolor.css("background-color", "green")
+        }else{
+            uvcolor.css("background-color", "yellow")
+        }
+        console.log(response.daily[0].uvi)
         // Weeks Forecast
         var { dd, mm, yyyy } = WeekDates();
         $(".WF").each(function (index, item) {
@@ -58,17 +70,20 @@
             $(item).find("#hum").text("Humidity:" + " " + response.daily[index + 1].humidity);
         });
     }
-
+    // Sets and gets value from local storage and creates search history button with value from local storage (city name)
     function createbutton(a, obj){
+        //storing and retrieving data from local storage
         var history = JSON.parse(localStorage.getItem("cities")) || []
         history.push({
             city: a,
             data: obj,
         })
         localStorage.setItem("cities", JSON.stringify(history))
+        //creating buttons
         var histbtn = $("<button>")
         histbtn.text(history[history.length-1].city).attr("class", "historybtn")
         $("#sbtnarea").append(histbtn)
+        // click event for history buttons
         histbtn.on("click", function(event){
             event.stopPropagation()
             console.log("Its Aight")
@@ -84,10 +99,9 @@
         })
         
         
-        // response = history[history.length - 1].data
-        // histbtn.text(history[history.length - 1].city).attr("class", "historybtn")
         
     }
+    // When document is ready the dashboard should be polluted with information from local storage
     $(document).ready(function(){
         if(localStorage.getItem("cities")){
             var currentdisplay = JSON.parse(localStorage.getItem("cities"))
@@ -104,25 +118,26 @@
         }
     })
 
-  
+    // Click event for search button which takes input valu from form and builds upon queryurl
     $("#searchbutton").click(function(){
         cityname = $(".input").val().trim()
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityname+"&appid="+newSPI
-        // Creating new button
+        
         
         $.ajax({
             url: queryURL,
             method: "GET"
           }).then(function(resp) {
-              // Create CODE HERE to log the resulting object
+            // grabs lat and lon from first API call and is used to build the url for the second API call
             var latitude = resp.coord.lat
             var longitude = resp.coord.lon
             return $.ajax({
                 url: "https://api.openweathermap.org/data/2.5/onecall?lat="+latitude+"&lon="+longitude+"&exclude=minutely,hourlydaily&appid="+ newSPI
             }).then(function(response){
+                // Dashboard display and create button function are called
                 DashboardDisplay(response);
                 createbutton(cityname, response);
-                // only save the valid city names
+                
             })
         })
 

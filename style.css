@@ -9,6 +9,7 @@ body{
     height: 94vh;
     position: relative;
     bottom: 20px;
+    display: grid;
 }
 .row{
     height: 100vh;
@@ -30,11 +31,14 @@ body{
     color: white;
     text-align: center;
     height: 10vh;
+    padding-bottom: 5px;
+    grid-area: "head";
 }
 .searcharea{
     margin-top: 0px;
     padding-left: 20px;
     background-color: lightgray;
+    grid-area: "search";
 }
 .col-4{
     padding-top: 0px;
@@ -45,6 +49,7 @@ body{
     border-style: solid;
     border-width: thin;
     border-color: black;
+    grid-area: "day";
 }
 input{
     float: left;
@@ -69,6 +74,7 @@ input{
     height: 170px;
     width: 120px;
 }
+
 h3{
     font-weight: bold;
 }
@@ -86,3 +92,4 @@ h3{
     font-size: 25px;
     border-radius: 10px;
 }
+
