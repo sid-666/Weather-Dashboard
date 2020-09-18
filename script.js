@@ -40,10 +40,13 @@
     }
     //Function that displays API response in dashboard display
     function DashboardDisplay(response) {
-        
+        console.log(response);
         // Todays weather data
         var iconurl = "http://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png";
         $("#wicon").attr("src", iconurl);
+        console.log(currentweather.find("#cheader"));
+        console.log(cityname);
+        console.log(today);
         currentweather.find("#cheader").text(`${cityname} ${today}`);
         var temperature = (response.daily[0].temp.day - 273.15) * 1.80 + 32;
         currentweather.find("#temp").text("Temperature:" + " " + temperature.toFixed(2) + "F");
@@ -109,24 +112,22 @@
             var r = currentdisplay[currentdisplay.length-1].data
             cityname = n
             DashboardDisplay(r)
-            $("#sbtnarea").empty()
+            $("#sbtnarea").empty();
+            console.log("LS DATA", currentdisplay);
             for(var i = 0; i< currentdisplay.length; i++){
                 var histbtn = $("<button>")
                 histbtn.text(currentdisplay[i].city).attr("class", "historybtn")
+                histbtn.on("click", function(event){
+                    for(var x = 0; x< currentdisplay.length; x++ ){
+                        console.log(currentdisplay[x].city);
+                        if($(event.currentTarget).text()== currentdisplay[x].city){
+                            cityname = currentdisplay[x].city
+                            DashboardDisplay(currentdisplay[x].data)
+                        }
+                    }
+                })
                 $("#sbtnarea").append(histbtn)
             }
-            histbtn.on("click", function(event){
-                event.stopPropagation()
-                console.log("Its Aight")
-                for(var x = 0; x< currentdisplay.length; x++ ){
-                    if(histbtn.text()== currentdisplay[x].city){
-                        cityname = currentdisplay[x].city
-                        DashboardDisplay(currentdisplay[x].data)
-                    }else{
-                        null
-                    }
-                }
-            })
         }
     })
 
