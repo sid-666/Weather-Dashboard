@@ -2,8 +2,7 @@
     var currentweather = $("#todayweather")
     var Weeksweather = $("#weekforecast")
     // API key
-    var APIKey = "e5d3d883d923c69ea77aa69a9e9734ab";
-    var newSPI = "6261fa55f519561be7caea838a0ef085"
+    var APIKey = "6261fa55f519561be7caea838a0ef085"
     var cityname;
     
     // Storing date function in a variable
@@ -40,13 +39,9 @@
     }
     //Function that displays API response in dashboard display
     function DashboardDisplay(response) {
-        console.log(response);
         // Todays weather data
         var iconurl = "http://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png";
         $("#wicon").attr("src", iconurl);
-        console.log(currentweather.find("#cheader"));
-        console.log(cityname);
-        console.log(today);
         currentweather.find("#cheader").text(`${cityname} ${today}`);
         var temperature = (response.daily[0].temp.day - 273.15) * 1.80 + 32;
         currentweather.find("#temp").text("Temperature:" + " " + temperature.toFixed(2) + "F");
@@ -60,8 +55,7 @@
             uvcolor.css("background-color", "green")
         }else{
             uvcolor.css("background-color", "yellow")
-        }
-        console.log(response.daily[0].uvi)
+        }    
         // Weeks Forecast
         var { dd, mm, yyyy } = WeekDates();
         $(".WF").each(function (index, item) {
@@ -134,9 +128,7 @@
     // Click event for search button which takes input valu from form and builds upon queryurl
     $("#searchbutton").click(function(){
         cityname = $(".input").val().trim()
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityname+"&appid="+newSPI
-        
-        
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityname+"&appid="+APIKey
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -145,7 +137,7 @@
             var latitude = resp.coord.lat
             var longitude = resp.coord.lon
             return $.ajax({
-                url: "https://api.openweathermap.org/data/2.5/onecall?lat="+latitude+"&lon="+longitude+"&exclude=minutely,hourlydaily&appid="+ newSPI
+                url: "https://api.openweathermap.org/data/2.5/onecall?lat="+latitude+"&lon="+longitude+"&exclude=minutely,hourlydaily&appid="+ APIKey
             }).then(function(response){
                 // Dashboard display and create button function are called
                 DashboardDisplay(response);
